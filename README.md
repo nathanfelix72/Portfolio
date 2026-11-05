@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio
 
-## Getting Started
+Static Next.js portfolio hosted on **S3 + CloudFront**, provisioned with **Terraform**, and deployed from **GitHub Actions** via IAM OIDC.
 
-First, run the development server:
+Live URL (CloudFront): https://d209qbrh7b6fyk.cloudfront.net
 
-```bash
+## Stack
+
+- Next.js App Router with `output: "export"`
+- Private S3 bucket + CloudFront Origin Access Control
+- GitHub Actions → assume `portfolio-github-deploy` role (no long-lived AWS keys in GitHub)
+- Local AWS CLI profile: `portfolio` (personal account `248189945218`)
+
+## Local development
+
+```powershell
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Build the static export:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```powershell
+npm run build
+# output lands in ./out
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## AWS CLI
 
-## Learn More
+Use the personal account profile only:
 
-To learn more about Next.js, take a look at the following resources:
+```powershell
+aws sts get-caller-identity --profile portfolio
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Do **not** use the `clearsky` profile for this project.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Terraform
 
-## Deploy on Vercel
+```powershell
+$env:AWS_PROFILE = "portfolio"
+cd terraform
+terraform init
+terraform plan
+terraform apply
+terraform output
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Useful outputs:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Output | Purpose |
+|--------|---------|
+| `cloudfront_url` | Public site URL |
+| `bucket_name` | Deploy target for `aws s3 sync` |
+| `cloudfront_distribution_id` | Cache invalidations |
+| `github_actions_role_arn` | OIDC role for GitHub Actions |
+
+Destroy everything:
+
+```powershell
+$env:AWS_PROFILE = "portfolio"
+cd terraform
+terraform destroy
+```
+
+## CI/CD
+
+Push to `main` runs `.github/workflows/deploy.yml`:
+
+1. `npm ci` + `npm run build`
+2. Assume the GitHub OIDC IAM role
+3. Sync `out/` to S3
+4. Invalidate CloudFront
+
+Repository variables (already set for this repo):
+
+- `AWS_ROLE_ARN`
+- `S3_BUCKET`
+- `CLOUDFRONT_DISTRIBUTION_ID`
+
+## Add a project
+
+Edit `lib/projects.ts` and push to `main`.
+
+## Add a custom domain later
+
+1. Request an ACM certificate in **us-east-1**
+2. Set Terraform variables:
+
+```hcl
+domain_name         = "yourdomain.com"
+acm_certificate_arn = "arn:aws:acm:us-east-1:ACCOUNT:certificate/ID"
+```
+
+3. `terraform apply`, then point DNS (Route 53 or elsewhere) at the CloudFront distribution
+
+No domain is purchased by this project.
