@@ -14,7 +14,6 @@ resource "aws_iam_openid_connect_provider" "github" {
 
 locals {
   github_oidc_provider_arn = aws_iam_openid_connect_provider.github.arn
-  github_sub               = "repo:${var.github_owner}/${var.github_repo}:ref:refs/heads/${var.github_branch}"
 }
 
 data "aws_iam_policy_document" "github_assume" {
@@ -34,9 +33,9 @@ data "aws_iam_policy_document" "github_assume" {
     }
 
     condition {
-      test     = "StringEquals"
+      test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = [local.github_sub]
+      values   = [var.github_oidc_sub_prefix]
     }
   }
 }

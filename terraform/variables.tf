@@ -34,6 +34,12 @@ variable "github_branch" {
   default     = "main"
 }
 
+variable "github_oidc_sub_prefix" {
+  description = "GitHub Actions OIDC subject prefix. Prefer immutable form repo:OWNER@ID/REPO@ID:* when the repo enables immutable subjects."
+  type        = string
+  default     = "repo:nathanfelix72@131198703/Portfolio@1447445645:*"
+}
+
 variable "domain_name" {
   description = "Optional custom domain (leave empty for CloudFront default domain)."
   type        = string

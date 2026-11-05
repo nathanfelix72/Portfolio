@@ -78,6 +78,16 @@ Repository variables (already set for this repo):
 - `S3_BUCKET`
 - `CLOUDFRONT_DISTRIBUTION_ID`
 
+GitHub uses **immutable OIDC subjects** for this repo. The IAM trust policy matches:
+
+`repo:nathanfelix72@131198703/Portfolio@1447445645:*`
+
+Inspect with:
+
+```powershell
+gh api repos/nathanfelix72/Portfolio/actions/oidc/customization/sub
+```
+
 ## Add a project
 
 Edit `lib/projects.ts` and push to `main`.
