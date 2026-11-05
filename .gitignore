@@ -53,3 +53,5 @@ override.tf.json
 *_override.tf.json
 *.tfvars
 !example.tfvars
+# Keep local tfvars out of git (may include personal domain settings).
+# example.tfvars is the committed template.

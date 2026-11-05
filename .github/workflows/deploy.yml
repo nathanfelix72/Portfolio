@@ -44,7 +44,8 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Sync to S3
-        run: aws s3 sync out/ "s3://${S3_BUCKET}" --delete
+        # Preserve sibling apps hosted under prefixes (e.g. /legoize/).
+        run: aws s3 sync out/ "s3://${S3_BUCKET}" --delete --exclude "legoize/*"
 
       - name: Invalidate CloudFront
         run: |

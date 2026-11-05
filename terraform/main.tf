@@ -1,7 +1,9 @@
 data "aws_caller_identity" "current" {}
 
 locals {
-  has_custom_domain = var.domain_name != "" && var.acm_certificate_arn != ""
+  # CloudFront alias/cert attach only after ACM validation completes.
+  has_custom_domain = local.enable_custom_domain && var.wait_for_certificate_validation
+  certificate_arn   = local.has_custom_domain ? aws_acm_certificate_validation.site[0].certificate_arn : null
   bucket_name       = "${var.project_name}-${data.aws_caller_identity.current.account_id}"
 }
 
@@ -49,13 +51,21 @@ resource "aws_cloudfront_origin_access_control" "site" {
   signing_protocol                  = "sigv4"
 }
 
+resource "aws_cloudfront_function" "directory_index" {
+  name    = "${var.project_name}-directory-index"
+  runtime = "cloudfront-js-2.0"
+  comment = "Rewrite directory URIs to index.html for S3 static hosting"
+  publish = true
+  code    = file("${path.module}/cloudfront_function.js")
+}
+
 resource "aws_cloudfront_distribution" "site" {
   enabled             = true
   is_ipv6_enabled     = true
   comment             = "${var.project_name} static site"
   default_root_object = "index.html"
   price_class         = "PriceClass_100"
-  aliases             = local.has_custom_domain ? [var.domain_name] : []
+  aliases             = local.has_custom_domain ? local.site_aliases : []
 
   origin {
     domain_name              = aws_s3_bucket.site.bucket_regional_domain_name
@@ -75,6 +85,11 @@ resource "aws_cloudfront_distribution" "site" {
       cookies {
         forward = "none"
       }
+    }
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.directory_index.arn
     }
   }
 
@@ -100,7 +115,7 @@ resource "aws_cloudfront_distribution" "site" {
 
   viewer_certificate {
     cloudfront_default_certificate = !local.has_custom_domain
-    acm_certificate_arn            = local.has_custom_domain ? var.acm_certificate_arn : null
+    acm_certificate_arn            = local.certificate_arn
     ssl_support_method             = local.has_custom_domain ? "sni-only" : null
     minimum_protocol_version       = local.has_custom_domain ? "TLSv1.2_2021" : null
   }

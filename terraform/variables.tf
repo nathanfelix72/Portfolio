@@ -34,20 +34,28 @@ variable "github_branch" {
   default     = "main"
 }
 
-variable "github_oidc_sub_prefix" {
-  description = "GitHub Actions OIDC subject prefix. Prefer immutable form repo:OWNER@ID/REPO@ID:* when the repo enables immutable subjects."
-  type        = string
-  default     = "repo:nathanfelix72@131198703/Portfolio@1447445645:*"
+variable "github_oidc_sub_prefixes" {
+  description = "GitHub Actions OIDC subject prefixes allowed to assume the deploy role (immutable form repo:OWNER@ID/REPO@ID:*)."
+  type        = list(string)
+  default = [
+    "repo:nathanfelix72@131198703/Portfolio@1447445645:*",
+  ]
 }
 
 variable "domain_name" {
-  description = "Optional custom domain (leave empty for CloudFront default domain)."
+  description = "Custom domain hosted in Cloudflare (e.g. nathanfelix72.com). Leave empty to use the CloudFront domain only."
   type        = string
   default     = ""
 }
 
-variable "acm_certificate_arn" {
-  description = "Optional ACM certificate ARN in us-east-1 for the custom domain."
-  type        = string
-  default     = ""
+variable "include_www" {
+  description = "Also request/serve www.<domain_name>."
+  type        = bool
+  default     = true
+}
+
+variable "wait_for_certificate_validation" {
+  description = "Set true after ACM DNS validation records exist in Cloudflare so Terraform can wait and attach the cert."
+  type        = bool
+  default     = false
 }
