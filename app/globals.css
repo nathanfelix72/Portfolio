@@ -227,6 +227,76 @@ main {
   animation: rise 700ms ease-out both;
 }
 
+.about-copy p + p {
+  margin-top: 1rem;
+}
+
+.about-subtitle {
+  margin: 2.5rem 0 1rem;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+}
+
+.experience-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 44rem;
+  display: grid;
+  gap: 1.35rem;
+}
+
+.experience-list li {
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(16, 35, 31, 0.08);
+  animation: rise 700ms ease-out both;
+}
+
+.experience-list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.experience-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
+  font-size: 1.02rem;
+}
+
+.experience-header span {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.experience-org {
+  margin-top: 0.2rem;
+  color: var(--accent-deep);
+  font-size: 0.95rem;
+}
+
+.experience-list p {
+  margin: 0.55rem 0 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.about-skills {
+  margin-top: 0.25rem;
+}
+
+.about-contact {
+  margin: 2.5rem 0 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.about-contact a {
+  color: var(--accent-deep);
+}
+
 .site-footer {
   padding: 1.5rem 0 2rem;
   color: var(--ink-soft);
@@ -243,6 +313,127 @@ main {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.cli-terminal {
+  margin-top: 0.5rem;
+  padding: 1.25rem 1.2rem 1.4rem;
+  border: 1px solid rgba(16, 35, 31, 0.18);
+  border-radius: 0.75rem;
+  background: #0d1110;
+  color: #d7e0dc;
+  font-family: "Cascadia Mono", "Consolas", "Courier New", monospace;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  animation: rise 700ms ease-out both;
+  overflow-x: auto;
+}
+
+.cli-block {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.cli-block + .cli-block,
+.cli-finder,
+.cli-guesses,
+.cli-keyboard,
+.cli-actions,
+.cli-prompt {
+  margin-top: 0.85rem;
+}
+
+.cli-line,
+.cli-terminal p {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.cli-green {
+  color: #5dffa6;
+}
+
+.cli-yellow {
+  color: #ffe566;
+}
+
+.cli-blue {
+  color: #7ec8ff;
+}
+
+.cli-magenta {
+  color: #e59cff;
+}
+
+.cli-red {
+  color: #ff7b72;
+}
+
+.cli-absent {
+  color: #c9d1d9;
+}
+
+.cli-indent {
+  padding-left: 1ch;
+}
+
+.cli-keyboard .cli-line span,
+.cli-guesses .cli-line span {
+  display: inline-block;
+  min-width: 1ch;
+}
+
+.cli-prompt,
+.cli-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.cli-prompt-mark {
+  color: #5dffa6;
+}
+
+.cli-input {
+  flex: 1;
+  min-width: 12rem;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid rgba(215, 224, 220, 0.25);
+  border-radius: 0.3rem;
+  background: #121816;
+  color: #d7e0dc;
+  font: inherit;
+}
+
+.cli-input:focus {
+  outline: 1px solid #5dffa6;
+}
+
+.cli-btn {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid rgba(215, 224, 220, 0.28);
+  border-radius: 0.3rem;
+  background: transparent;
+  color: #d7e0dc;
+  font: inherit;
+  cursor: pointer;
+}
+
+.cli-btn:hover {
+  border-color: #5dffa6;
+  color: #5dffa6;
+}
+
+.cli-finder {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.cli-finder label {
+  display: grid;
+  gap: 0.35rem;
 }
 
 @media (max-width: 640px) {

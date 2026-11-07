@@ -45,6 +45,7 @@ jobs:
 
       - name: Sync to S3
         # Preserve sibling apps hosted under prefixes (e.g. /legoize/).
+        # Quixx ships inside this repo's public/quixx/ export; legoize is deployed separately.
         run: aws s3 sync out/ "s3://${S3_BUCKET}" --delete --exclude "legoize/*"
 
       - name: Invalidate CloudFront

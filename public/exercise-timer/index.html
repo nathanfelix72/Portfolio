@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercise Timer</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app">
+      <header>
+        <h1>Exercise Timer</h1>
+      </header>
+
+      <div class="container">
+        <!-- Routine Builder Section -->
+        <div class="section" id="builder-section">
+          <h2>Create Your Routine</h2>
+
+          <div class="routine-form">
+            <div class="form-group">
+              <label for="routine-name">Routine Name:</label>
+              <input
+                type="text"
+                id="routine-name"
+                placeholder="My Workout Routine"
+              />
+            </div>
+
+            <div class="exercise-builder">
+              <h3>Add Exercises</h3>
+              <div class="exercise-form">
+                <input
+                  type="text"
+                  id="exercise-name"
+                  placeholder="Exercise name (e.g., Push-ups)"
+                />
+                <input
+                  type="number"
+                  id="exercise-duration"
+                  placeholder="Duration (seconds)"
+                  min="1"
+                  max="3600"
+                />
+                <select id="exercise-type">
+                  <option value="exercise">Exercise</option>
+                  <option value="break">Break</option>
+                  <option value="prepare">Prepare</option>
+                </select>
+                <button type="button" id="add-exercise">Add Exercise</button>
+              </div>
+
+              <div class="quick-breaks">
+                <h4>Quick Breaks</h4>
+                <div class="break-buttons">
+                  <button type="button" class="break-btn" data-duration="10">
+                    10s Break
+                  </button>
+                  <button type="button" class="break-btn" data-duration="20">
+                    20s Break
+                  </button>
+                  <button type="button" class="break-btn" data-duration="30">
+                    30s Break
+                  </button>
+                  <button type="button" class="break-btn" data-duration="60">
+                    60s Break
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="routine-preview">
+              <h3>Routine Preview</h3>
+              <div id="exercise-list" class="exercise-list"></div>
+              <div class="routine-actions">
+                <button type="button" id="save-routine">Save Routine</button>
+                <button type="button" id="clear-routine">Clear All</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Saved Routines Section -->
+        <div class="section" id="routines-section">
+          <h2>Your Routines</h2>
+          <div id="saved-routines" class="saved-routines"></div>
+        </div>
+
+        <!-- Timer Section -->
+        <div class="section" id="timer-section" style="display: none">
+          <div class="timer-container">
+            <div class="routine-header">
+              <h2 id="routine-title">Current Routine</h2>
+              <button id="back-to-routines" class="back-btn">
+                ← Back to Routines
+              </button>
+            </div>
+
+            <div class="timer-display">
+              <div class="current-exercise">
+                <div class="exercise-type-badge" id="exercise-type-badge">
+                  EXERCISE
+                </div>
+                <h3 id="current-exercise-name">Push-ups</h3>
+              </div>
+
+              <div class="timer-circle">
+                <svg class="progress-ring" width="200" height="200">
+                  <circle
+                    class="progress-ring-circle"
+                    cx="100"
+                    cy="100"
+                    r="90"
+                  ></circle>
+                </svg>
+                <div class="timer-text">
+                  <div id="time-remaining">00:30</div>
+                  <div class="timer-label">remaining</div>
+                </div>
+              </div>
+
+              <div class="next-exercise">
+                <span class="next-label">Next:</span>
+                <span id="next-exercise-name">Rest</span>
+              </div>
+            </div>
+
+            <div class="progress-info">
+              <div class="progress-bar">
+                <div id="overall-progress" class="progress-fill"></div>
+              </div>
+              <div class="progress-text">
+                <span id="current-step">1</span> of
+                <span id="total-steps">5</span> exercises
+              </div>
+            </div>
+
+            <div class="timer-controls">
+              <button id="start-pause-btn" class="control-btn primary">
+                Start
+              </button>
+              <button id="skip-btn" class="control-btn">Skip</button>
+              <button id="reset-btn" class="control-btn">Reset</button>
+            </div>
+
+            <div class="sound-controls">
+              <label>
+                <input type="checkbox" id="sound-enabled" checked />
+                Sound notifications
+              </label>
+              <div
+                id="wake-lock-status"
+                class="wake-lock-status"
+                style="display: none"
+              >
+                🔒 Screen staying awake
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

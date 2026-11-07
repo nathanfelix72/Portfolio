@@ -18,7 +18,8 @@ export const metadata: Metadata = {
     default: "Nathan Felix",
     template: "%s · Nathan Felix",
   },
-  description: "Projects, experiments, and infrastructure notes from Nathan Felix.",
+  description:
+    "Full stack software engineer at BYU — university web apps, cloud integrations, and AI-assisted workflows.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -28,9 +29,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <div className="site-shell flex min-h-full flex-1 flex-col">
           <SiteHeader />
           <main>{children}</main>
-          <footer className="site-footer">
-            Built with Next.js · Hosted on AWS · Managed with Terraform
-          </footer>
         </div>
       </body>
     </html>

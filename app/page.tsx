@@ -3,11 +3,12 @@ import Link from "next/link";
 export default function HomePage() {
   return (
     <section className="hero">
-      <h1>Building things, then shipping them.</h1>
+      <h1>Nathan Felix</h1>
       <p>
-        I&apos;m Nathan Felix — software engineer focused on practical systems,
-        clean interfaces, and infrastructure you can actually maintain. This site
-        is a living portfolio of that work.
+        Full stack software engineer building university-scale web apps,
+        integrations, and AI-assisted workflows. Currently a senior engineer at
+        BYU&apos;s McKay School of Education and finishing an MISM at the Marriott
+        School.
       </p>
       <div className="cta-row">
         <Link href="/projects" className="button button-primary">

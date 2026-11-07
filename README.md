@@ -13,12 +13,26 @@ Live URL (CloudFront): https://d209qbrh7b6fyk.cloudfront.net
 
 ## Local development
 
+Screen changes locally before pushing to `main` (that deploys to CloudFront).
+
 ```powershell
 npm install
 npm run dev
 ```
 
-Build the static export:
+Open http://localhost:3000 — hot reload while you edit.
+
+### Production-like preview
+
+This matches what S3/CloudFront serves (static export in `./out`):
+
+```powershell
+npm run preview
+```
+
+Open http://localhost:4173. Use this before merging visual or routing changes.
+
+Build only (no server):
 
 ```powershell
 npm run build
