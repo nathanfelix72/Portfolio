@@ -93,11 +93,15 @@ main {
 }
 
 .hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(12rem, 0.7fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
   padding: 4.5rem 0 3rem;
   animation: rise 700ms ease-out both;
 }
 
-.hero h1 {
+.hero-copy h1 {
   margin: 0;
   max-width: 14ch;
   font-family: var(--font-display), Georgia, serif;
@@ -106,12 +110,22 @@ main {
   letter-spacing: -0.03em;
 }
 
-.hero p {
+.hero-copy p {
   margin: 1.25rem 0 0;
   max-width: 38rem;
   color: var(--ink-soft);
   font-size: 1.1rem;
   line-height: 1.6;
+}
+
+.hero-photo {
+  width: min(100%, 22rem);
+  height: auto;
+  justify-self: end;
+  border-radius: 1.25rem;
+  object-fit: cover;
+  aspect-ratio: 1;
+  box-shadow: 0 18px 40px rgba(16, 35, 31, 0.14);
 }
 
 .cta-row {
@@ -443,6 +457,13 @@ main {
   }
 
   .hero {
+    grid-template-columns: 1fr;
     padding-top: 2.5rem;
+  }
+
+  .hero-photo {
+    order: -1;
+    justify-self: start;
+    width: min(100%, 16rem);
   }
 }
