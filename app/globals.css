@@ -166,6 +166,310 @@ main {
   background: rgba(255, 255, 255, 0.45);
 }
 
+.hero-play-aside {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+  max-width: 26rem;
+  padding: 0.35rem 0.15rem;
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-radius: 0.5rem;
+  transition: color 180ms ease;
+}
+
+.hero-play-aside:hover {
+  color: var(--ink);
+}
+
+.hero-play-aside-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.hero-play-aside-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(58, 82, 76, 0.72);
+}
+
+.hero-play-aside-text {
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.hero-play-aside:hover .hero-play-aside-text {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+.hero-play-doodle {
+  flex-shrink: 0;
+  stroke: currentColor;
+  overflow: visible;
+}
+
+.hero-play-doodle-figure {
+  transform-origin: 20px 36px;
+  transform-box: fill-box;
+  animation: stick-sway 3.6s ease-in-out infinite;
+}
+
+.hero-play-portal {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: portal-pulse 2.8s ease-in-out infinite;
+}
+
+.hero-play-portal-a {
+  fill: rgba(15, 118, 110, 0.55);
+}
+
+.hero-play-portal-b {
+  fill: rgba(196, 92, 38, 0.5);
+  animation-delay: 1.4s;
+}
+
+.hero-play-aside:hover .hero-play-doodle-figure {
+  animation-duration: 1.6s;
+}
+
+@keyframes stick-sway {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes portal-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-play-doodle-figure,
+  .hero-play-portal {
+    animation: none;
+  }
+}
+
+body.portal-game-active {
+  overflow: hidden;
+}
+
+body.portal-game-active .site-header {
+  display: none;
+}
+
+body.portal-game-active main {
+  padding: 0;
+}
+
+body.portal-game-active .site-shell {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.portal-game {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-height: 100vh;
+}
+
+.portal-game-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid rgba(16, 35, 31, 0.1);
+  background: rgba(247, 250, 247, 0.92);
+}
+
+.portal-game-back {
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 0.92rem;
+  padding: 0.25rem 0.15rem;
+}
+
+.portal-game-back:hover {
+  color: var(--ink);
+}
+
+.portal-game-title {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+}
+
+.portal-game-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem 0.65rem;
+}
+
+.portal-game-tool {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  padding: 0.35rem 0.7rem;
+}
+
+.portal-game-tool:hover:not(:disabled) {
+  color: var(--ink);
+  border-color: rgba(16, 35, 31, 0.14);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.portal-game-tool:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.portal-game-tool-primary {
+  color: #f8fffc;
+  background: var(--accent);
+  border-color: transparent;
+}
+
+.portal-game-tool-primary:hover:not(:disabled) {
+  color: #f8fffc;
+  background: var(--accent-deep);
+  border-color: transparent;
+}
+
+.portal-game-tool.is-active {
+  color: var(--accent-deep);
+  border-color: rgba(15, 118, 110, 0.35);
+  background: rgba(15, 118, 110, 0.12);
+}
+
+.portal-game-mode-group {
+  display: inline-flex;
+  gap: 0.15rem;
+  padding: 0.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(16, 35, 31, 0.1);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.portal-game-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.portal-game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.portal-game-canvas.is-editing {
+  cursor: default;
+}
+
+.portal-game-status {
+  margin: 0;
+  padding: 0.35rem 1.25rem;
+  font-size: 0.85rem;
+  color: var(--accent-deep);
+  background: rgba(15, 118, 110, 0.08);
+  border-bottom: 1px solid rgba(15, 118, 110, 0.12);
+}
+
+.portal-game-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: rgba(16, 35, 31, 0.35);
+}
+
+.portal-game-modal {
+  width: min(28rem, 100%);
+  padding: 1.15rem 1.2rem 1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(16, 35, 31, 0.12);
+  background: #f7faf7;
+  box-shadow: 0 18px 48px rgba(16, 35, 31, 0.18);
+}
+
+.portal-game-modal-title {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.portal-game-modal-lead {
+  margin: 0 0 0.85rem;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.portal-game-modal-input {
+  display: block;
+  width: 100%;
+  resize: vertical;
+  min-height: 6.5rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(16, 35, 31, 0.16);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.86rem;
+  line-height: 1.4;
+}
+
+.portal-game-modal-input:focus {
+  outline: 2px solid rgba(15, 118, 110, 0.35);
+  outline-offset: 1px;
+}
+
+.portal-game-modal-error {
+  margin: 0.55rem 0 0;
+  color: #9a3412;
+  font-size: 0.86rem;
+}
+
+.portal-game-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  margin-top: 0.9rem;
+}
+
 .section-title {
   margin: 0 0 0.5rem;
   font-family: var(--font-display), Georgia, serif;
